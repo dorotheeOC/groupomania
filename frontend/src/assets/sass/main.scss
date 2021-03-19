@@ -1,0 +1,387 @@
+@import "./mixin";
+$color-primary: #43cea2;
+$color-secondary: #185a9d;
+$color-tertiary: #FA3448;
+$color-primary-light : lighten($color-primary, 10%);
+$color-secondary-light : lighten($color-secondary, 10%);
+$color-dark: #343a40;
+$color-bg-body : lighten($color-dark, 70%);
+$color-bg-nav : darken($color-bg-body, 45%);
+$color-bg-footer : darken($color-secondary, 25%);
+$breakpoint:(
+    mobile: 700px,
+    laptop: 1200px
+);
+
+body {
+    @include gradient;
+}
+#main {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5rem;
+    position: relative;
+}
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: white;
+    border-top: .5px solid #ababab;
+    box-shadow: 0rem -0.1rem 2.2rem $color-bg-footer;
+    padding: .55rem;
+}
+a {
+    cursor: pointer;
+}
+.text-uppercase {
+    font-size: 70%;
+}
+.alert {
+    @include message;
+    @include alert;
+    top: 10rem;
+}
+
+.current-user {
+    text-shadow: .2rem 0.1rem 0.2rem #ababab;
+    font-size: .75rem;
+}
+.title {
+    /* text-shadow: 0rem -0.1rem 0.5rem white; */
+    background-color: black;
+    color: white;
+    width: fit-content;
+    box-shadow: 0.1rem 0.1rem 0.5rem black;
+}
+.display-4 {
+    font-size: 2rem;
+}
+.marked {
+    position: relative;
+    z-index: 0;
+    width: fit-content;
+}
+.gradient-marked {
+    @include gradient-lighter;
+    opacity: 0.7;
+    position: absolute;
+    z-index: -1;
+    top: .99rem;
+    border-radius: 2rem;
+    height: .4rem;
+    width: 100%;
+}
+header {
+    & p {
+        position: relative;
+        margin: 0 auto;
+        color: black;
+        font-weight: bolder;
+        width: fit-content;
+        & img {
+            position: absolute;
+            opacity: 0.3;
+
+        }
+    }
+}
+.navbar {
+    background-color: white;
+    border-bottom: .1px solid $color-bg-nav;
+    padding: 0;
+    & .nav-link {
+        padding: 0.2rem 1rem;
+    }
+    @include mobile-only {
+        justify-content: flex-end;
+    }
+}
+#navbarNav {
+   box-shadow:  0.1rem 0.1rem 1.2rem $color-bg-nav;
+}
+.navbar-brand {
+    margin-right: auto;
+}
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+    @include not-mobile {
+        border-bottom: 3px solid $color-primary;
+    } 
+}
+.navbar .nav-link{
+    border-bottom: 3px solid transparent;
+}
+.search-bar {
+    @include mobile-only {
+        width: 100%;
+    }
+    padding: .5rem 4rem;
+    background-color: $color-secondary;
+    & .form-control-sm {
+        border: 1px solid #ced4da;
+        font-size: .78rem;
+        &:focus {
+            border-color: $color-primary;
+            box-shadow: 0 0 0 0.2rem $color-primary-light;
+        }
+    }
+    & i {
+        color: $color-primary-light;
+    }
+}
+.nav-fav {
+    position: fixed;
+    left: -1rem;
+    width: 15%;
+    z-index: 2;
+    & a {
+        color: #6f827c!important;
+    }
+}
+.form-inline {
+    & .custom-input {
+        font-size: .8rem;
+        line-height: 1;
+        color: #737c83;
+        &:focus {
+            border-color: $color-primary;
+            box-shadow: 0 0 0 0.2rem $color-primary-light;
+        }
+    }
+}
+.dropdown {
+    & .dropdown-menu {
+        min-width: 7rem!important;
+        padding: 0.15rem 0!important;
+        & .dropdown-item {
+            padding: .25rem 1rem!important;
+            font-size: small!important;
+        }
+    }
+}
+form .marked {
+    width: 14rem;
+}
+.form-group{
+    & .form-control:focus {
+        border-color: $color-primary;
+        box-shadow: none;
+    }
+}
+.form-container {
+    @include not-mobile {
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+.btn {
+    border-radius: 2rem;
+}
+.btn-primary {
+    background-color: $color-primary;
+    border: none;
+    &:hover {
+        background-color: $color-primary-light;
+        border: none;
+    }
+    &:focus {
+        background-color: $color-primary;
+        border: none;
+        box-shadow: none;
+    }
+    &:not(:disabled):not(.disabled):active {
+        background-color: $color-primary;
+        border: none;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}
+.btn-outline-primary {
+    border-color: $color-primary;
+    color: $color-primary;
+    &:hover {
+        background-color: $color-primary-light;
+        border-color: $color-primary;
+    }
+    &:focus {
+        background-color: none;
+        border-color: $color-primary;
+        box-shadow: none;
+    }
+    &:not(:disabled):not(.disabled):active {
+        background-color: $color-primary;
+        border-color: $color-primary;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}
+.btn-secondary {
+    background-color: $color-secondary;
+    border: none;
+    &:hover {
+        background-color: $color-secondary-light;
+        border: none;
+    }
+    &:focus {
+        background-color: $color-secondary;
+        border: none;
+        box-shadow: none;
+    }
+    &:not(:disabled):not(.disabled):active {
+        background-color: $color-secondary;
+        border: none;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}
+.show>.btn-secondary.dropdown-toggle {
+    background-color: $color-secondary-light;
+    border: none;
+}
+i {
+    color: $color-primary;
+    padding: 0 0.2rem 0 1rem;
+    font-size: 1rem;
+}
+.fa-plus,
+.fa-minus {
+    padding: 0 0.2rem 0 0;
+}
+.fa-plus {
+    color: white;
+}
+.info {
+    font-size: 0.8rem;
+    margin: 0;
+    color: grey;
+}
+.card-container {
+    padding: 5rem 0;
+}
+.card {
+    border: .1px black solid;
+    box-shadow: 0rem -.1rem 1.2rem $color-primary-light;
+    & .card-body {
+        position: relative;
+        & .stat {
+            @include button-gradient;
+            right: 1.5rem;
+            & i {
+                color: white;
+            }
+        }
+    }
+    & .back {
+        @include button-gradient;
+        box-shadow: 0.1rem 0.1rem 0.5rem black;
+        top: -.9rem;
+        left: .5rem;
+    }
+    & .back:hover {
+        @include button-gradient-hover;
+    }
+}
+.card a {
+    color: $color-primary;
+    font-size: 0.8rem;
+}
+
+.card-body img {
+    max-width: 100%!important;
+    height: auto!important;
+}
+.post-content {
+    @include not-mobile {
+        max-height: 20rem;  
+    }
+    overflow: hidden;
+    & p {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 12;
+        overflow: hidden;
+    }
+}
+.report {
+    border-left: 2px solid $color-bg-body;
+    & i {
+        padding: 0.5rem .5rem 0 0.5rem;
+        color: $color-bg-body;
+    }
+}
+.edit {
+    color: #6c757d!important;
+}
+.button-edit {
+    @include mobile-only {
+        bottom: 4rem;
+        right: 1rem;
+        position: fixed;
+    }
+    height: fit-content;
+    width: fit-content;
+    z-index: 1;
+    background: $color-secondary;
+    padding: 0.5rem .8rem;
+    border-radius: 2rem;
+    box-shadow: 0.1rem 0.1rem 1.2rem $color-secondary-light;
+    & span {
+        @include mobile-only {
+            display: none;
+        }
+    }
+}
+.modal {
+    top: 20%;
+    & .modal-content {
+        border: none!important;
+        & .close {
+            position: absolute;
+            z-index: 1;
+            right: 1rem;
+        }
+    }
+}
+
+.img-frame {
+    border-radius: 5rem;
+    overflow: hidden;
+    width: 5rem;
+    height: 5rem;
+}
+.profile-follow {
+    box-shadow: 0.2rem 0.1rem .2rem #e6e6e6;
+    width: 6rem;
+}
+.email-title {
+    color: $color-primary;
+}
+.list-group-item {
+    border: none;
+    & .comment {
+        @include message;
+        background-color: $color-primary;
+    }
+}
+.list {
+    padding: 0;
+    & .list-report {
+        box-shadow: 0.2rem 0.1rem .2rem #e6e6e6;
+        list-style: none;
+        border-left: 4px solid $color-primary;
+        & .report-author {
+            color: $color-secondary;
+        }
+        & a, i {
+            color: $color-secondary;
+        }
+    }
+}
+.page-item.active .page-link {
+    background-color: $color-secondary;
+    border-color: $color-secondary;
+}
