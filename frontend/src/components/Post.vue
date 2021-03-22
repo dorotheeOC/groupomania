@@ -58,7 +58,6 @@ export default {
       ...mapGetters({
         userId: "userId",
         posts: "posts", //donnée réactive (delete one post)
-
       }),
     },
 	mounted() {
