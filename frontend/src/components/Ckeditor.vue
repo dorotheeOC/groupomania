@@ -45,7 +45,8 @@ import { mapGetters } from "vuex";
                 }   
             }
         },
-        mounted() { 
+        beforeDestroy() {
+            store.state.newPost = {};
         },
         computed: {
             ...mapGetters({
@@ -54,21 +55,21 @@ import { mapGetters } from "vuex";
         },
         methods: {
             editPost() {
-                this.sent = store.state.newPost.postContent
+                this.sent = store.state.newPost.postContent;
                 this.$emit('input', store.state.newPost);
                 if(!this.postId) {
                     console.log('postID?',this.postId)
                     this.$http.post('posts/', {userId: store.state.userId, ...store.state.newPost}, {headers: {'Content-Type': 'application/json'}})
                     .then((response) => {
-                        store.state.totalItems++
+                        store.state.totalItems++;
                         store.state.posts.unshift({...response.body, liked: 0, commented: 0}); //affiche le dernier post
                         store.state.posts.pop();
                         let lastPage = store.state.pagination[store.state.pagination.length - 1]
-                        console.log('lastPage',store.state.totalPages)
+                        console.log('lastPage',store.state.totalPages);
                         if(store.state.posts.length >= 5 && store.state.totalItems % 5 == 1) {
-                            lastPage++
-                            store.state.pagination.push(lastPage)
-                            console.log('lastPage condition',lastPage)
+                            lastPage++;
+                            store.state.pagination.push(lastPage);
+                            console.log('lastPage condition',lastPage);
                         }
                         store.state.newPost = {};
                     })
@@ -79,25 +80,15 @@ import { mapGetters } from "vuex";
                     })
                 } else {
                     this.$http.put('posts/' + this.postId, {...store.state.newPost}, {headers: {'Content-Type': 'application/json'}})
-                    .then((response) => {
-                        console.log(response)
-                        console.log(store.state.newPost)
-                        if(store.state.newPost.title) {
-                            store.state.post.title = store.state.newPost.title;
-                        } else if(store.state.newPost.postContent) {
-                            store.state.post.postContent = store.state.newPost.postContent;
-                        } else if(store.state.newPost.title && store.state.newPost.postContent) {
-                              store.state.post = store.state.newPost;
-                        }
-                        store.state.newPost = {};
+                    .then(() => {
+                        store.state.post.title = store.state.newPost.title;
+                        store.state.post.postContent = store.state.newPost.postContent;
                         store.state.alert = true;
                         store.state.reportMsg = 'Le post a bien été modifié !';
                         setTimeout(() => { store.state.alert = false; }, 2000);
                     })
                     .catch(error => {error});
-                }
-
-                
+                }     
             }
         }
     }

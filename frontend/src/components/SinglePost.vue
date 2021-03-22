@@ -41,7 +41,7 @@
             </div>
             <ul class="list-group list-group-flush pt-4 p-md-4">
                 <h4 class="card-text pl-4 pl-lg-0 my-0">Commentaires</h4>
-                <p v-if="post.commented === 0">Ecris le premier commentaire !</p>
+                <p class="ml-4" v-if="post.commented === 0">Ecris le premier commentaire !</p>
                 <li class="list-group-item ml-2"  v-for="(comment, index) in post.postComment" :key="comment.index">
                     <div class="card-text my-0 ml-lg-2 p-0">
                         <small class="text-muted" v-if="comment.userId !== null">De <a @click="getProfile(comment.userId)">{{comment.author}} </a></small>
@@ -89,7 +89,7 @@ export default {
 	},
     computed: {
         ...mapState({
-            currentUser: "currentUser", //role admin ?
+            currentUser: "currentUser",
             alert: "alert",
             reportMsg: "reportMsg"
         }),
@@ -103,6 +103,10 @@ export default {
         .then((response) => { response.json()
             .then((data) => { 
                 store.state.post = data;
+                store.state.newPost = {
+                    title: store.state.post.title, 
+                    postContent: store.state.post.postContent
+                }
                 for (let liked of data.postLike) {
                     if (liked.userId === store.state.userId){
                         store.state.liked = true;
@@ -114,6 +118,7 @@ export default {
 	},
     beforeDestroy() {
         store.state.liked = false;
+        store.state.newPost = {};
     },
     methods: {
         dateFormat(date) {
