@@ -60,6 +60,7 @@ export default {
             .then((response) => { 
                 response.json().then((data) => { 
                     store.state.posts = data.response.posts;
+                    store.state.favId = id;
                 })  
             })
             .catch(error => {error})
