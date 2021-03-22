@@ -29,15 +29,16 @@ export default {
             .then((response) => {
                 response.json().then((data) => { 
                     store.state.posts = data.response.posts;
-                    const allPages = document.querySelectorAll("li.page-item")
+                    const allPages = document.querySelectorAll("li.page-item");
                     for(let page of allPages) {
                         if(page.classList.contains("active")) {
-                        page.classList.remove("active")
+                        page.classList.remove("active");
                         }
                     }
                     const pageLink = document.querySelector("a.page-link--" + index);
                     const pageItem = pageLink.parentNode;
-                    pageItem.classList.add("active")
+                    pageItem.classList.add("active");
+                    store.state.currentPage = index; //delete redirection
             })  
         })
             .catch(error => {error})
