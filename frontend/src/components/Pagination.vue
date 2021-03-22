@@ -1,7 +1,7 @@
 <template>
-<div class="d-md-flex justify-content-center align-items-center my-4">
+<div class="d-flex justify-content-center align-items-center my-4">
     <button class="btn btn-primary btn-sm my-sm-0" @click.prevent="back" v-if="visible">Tous les posts</button>
-    <ul class="pagination pagination-sm justify-content-center my-0 mx-4">
+    <ul class="pagination pagination-sm justify-content-center my-0">
         <li class="page-item"  v-for="(page, index) in pagination" :key="page">
             <a class="page-link" :class="'page-link--'+ index" @click.prevent="getPage(index)" >{{page}}</a>
         </li>
@@ -52,18 +52,9 @@ export default {
                     store.state.visible = false;
                     store.state.search.query = null;
                     store.state.posts = data.response.posts;
-                    store.state.totalItems = data.response.totalItems;
-                    store.state.totalPages = Math.ceil(store.state.totalItems / 5);
-                    let index = 0;
-                    while(index <= store.state.totalPages -1) {
-                        index++;
-                        store.state.pagination.push(index)
-                    }
                 })  
             })
             .catch(error => {error})
-            console.log('calcul', store.state.totalItems)
-            console.log('calcul', store.state.totalPages)
         }
     }
 }

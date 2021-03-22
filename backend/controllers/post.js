@@ -36,7 +36,9 @@ exports.getAllPost = (req, res) => {
   Post.findAndCountAll({ 
     limit, 
     offset,
-    where: condition || userfilter,
+    where: {
+        [Op.and] : [condition, userfilter]
+    },
     order: [
       ['createdAt', 'DESC']
     ],
