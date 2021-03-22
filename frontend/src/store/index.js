@@ -32,6 +32,7 @@ export default new Vuex.Store({
       }
     },
     userFav: [],
+    favId: 0,
     followers: [],
 		following: false,
     userId: 0,
@@ -45,6 +46,7 @@ export default new Vuex.Store({
     totalItems: 0,
     totalPages: 0,
     pagination: [],
+    currentPage: 0,
     search: {
       query: null
     },

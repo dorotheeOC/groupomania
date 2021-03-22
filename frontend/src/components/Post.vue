@@ -103,7 +103,7 @@ export default {
         deleteOnePost(id) {
             this.$http.delete('posts/' + id)
             .then(() => { 
-                this.$http.get('posts?page=0')
+                this.$http.get('posts?page=' + store.state.currentPage - 1)
                 .then((response) => { 
                     response.json().then((data) => { 
                     store.state.posts = data.response.posts;
