@@ -11,16 +11,15 @@
                 </div>
                     <ul class="list p-1">
                         <p class="p-4" v-if="postsReported.length === 0">Rien à signaler !</p>
-                        <li class="list-report my-3 px-4 p-1" v-for="post in postsReported" :key="post.id">
+                        <li class="list-report post-report my-3 px-4 p-1" v-for="post in postsReported" :key="post.id" @click="getOnePost(post.id)">
                             <div class="d-lg-flex justify-content-lg-between align-items-center">
                                 <div>
                                     {{post.title}}
                                     <small>
-                                        <p class="my-0">{{post.postContent}}</p>
                                         <p class="report-author font-weight-bold my-0">{{post.author}}</p>
                                     </small>
                                 </div>
-                                <a class="font-weight-bold" @click="deletePost(post.id)">{{post.reported}}
+                                <a class="font-weight-bold" @click="deletePost(post.id)">
                                     <i class="fas fa-trash"></i>Supprimer
                                 </a>
                             </div> 
@@ -90,6 +89,9 @@ export default {
         store.state.commentsReported = [];
     },
     methods: {
+        getOnePost(id) {
+            this.$router.push(`posts/${id}`);
+        },
         deletePost(id) {
             this.$http.delete('posts/' + id)
             .then(() => { 
