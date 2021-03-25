@@ -27,7 +27,7 @@ export default {
             store.state.pagination = [];
             store.state.posts = [];
             store.state.visible = true; //pagination tous les posts
-            if(store.state.search.query !==null && store.state.search.query !=='') {
+            if(store.state.search.query !== null && store.state.search.query !=='') {
                 this.$http.get(store.state.favId === 0 ?'posts?search=' + store.state.search.query : 'posts?search=' + store.state.search.query + '&id=' + store.state.favId)
                 .then((response) => { 
                     response.json().then((data) => { 

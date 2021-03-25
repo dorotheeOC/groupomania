@@ -9,34 +9,27 @@
                 <h3 class="card-text my-0">{{post.title}}</h3>
                 <div class="d-md-flex justify-content-start align-items-center">
                     <div class="card-text">
-                        <small class="text-muted" v-if="post.userId !== null">De <a @click="getProfile(post.userId)">{{post.author}} </a></small>
-                        <small class="text-muted" v-else>Utilisateur supprimé </small>
+                        <small class="text-muted">De <a @click="getProfile(post.userId)">{{post.author}} </a></small>
                         <small class="text-muted mr-2" v-if="post.createdAt"> le {{dateFormat(post.createdAt)}}</small>
                     </div>
-                    <a class="edit d-md-block" data-toggle="modal" data-target="#ckeditor" v-if="post.userId === currentUser.id"><i class="fas fa-pen mr-1 p-0"></i>Modifier</a>
-                    <div class="modal fade" id="ckeditor" tabindex="-1" role="dialog" aria-labelledby="ckeditorLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <Ckeditor />
-                            </div>
-                        </div>
-                    </div>
+                    <a class="edit d-md-block" @click="editOnePost" v-if="post.userId === currentUser.id"><i class="fas fa-pen mr-1 p-0"></i>Modifier</a>
                 </div>
                 
             </div>
             <div class="card-body">
                 <div class="card-text" v-html="post.postContent"></div>
                 <div class="d-flex justify-content-start align-items-center stat-single">
-                    <button @click.stop="likeOnePost(post.id)" class="btn btn-outline-primary btn-sm">Aimer ce post</button>
+                    <button @click.stop="likeOnePost" class="btn btn-outline-primary btn-sm">Aimer ce post</button>
                     <span  class="card-text my-0">
                     <i class="far fa-heart" v-if="!liked"></i>
                     <i class="fas fa-heart" v-else></i>
                         {{post.liked }}
                     </span>
                     <span class="card-text my-0"><i class="far fa-comment-dots"></i>{{post.commented}}</span>
+                    <a class="report text-muted ml-3 p-1" @click.prevent="deleteOnePost(post.id)" v-if="currentUser.role === 'admin' && post.createdAt || currentUser.id === post.userId && post.id">
+                        <i class="fas fa-trash"></i>
+                        <span>Supprimer</span>
+                    </a>
                 </div>
             </div>
             <ul class="list-group list-group-flush pt-4 p-md-4">
@@ -73,14 +66,13 @@
 </section>
 </template>
 <script>
-import Ckeditor from '../components/Ckeditor'
 import Comment from '../components/Comment'
 import store from '../store';
 import { mapState, mapGetters } from "vuex";
 
 export default {
     name: 'SinglePost',
-    components: { Ckeditor, Comment },
+    components: { Comment },
     data() {
         return {
             postId: this.$route.params.id,
@@ -118,7 +110,6 @@ export default {
 	},
     beforeDestroy() {
         store.state.liked = false;
-        store.state.newPost = {};
     },
     methods: {
         dateFormat(date) {
@@ -127,8 +118,12 @@ export default {
             const year = date.substring(0, 4);
             return `${day}.${month}.${year}`
         },
-        likeOnePost(id) {
-            this.$http.post('posts/' + id + '/likes', {userId: store.state.userId}, {headers: {'Content-Type': 'application/json'}})
+        editOnePost() {
+            this.$router.push('/ckeditor');
+            store.state.postId = this.postId;
+        },
+        likeOnePost() {
+            this.$http.post('posts/' + this.postId + '/likes', {userId: store.state.userId}, {headers: {'Content-Type': 'application/json'}})
             .then((response) => { 
                 store.state.post.liked += response.body.like //incrémente ou décrémente
                 if (response.body.like === 1) {
@@ -136,6 +131,13 @@ export default {
                 } else {
                     store.state.liked = false;
                 }
+            })
+            .catch(error => {error})
+        },
+        deleteOnePost() {
+            this.$http.delete('posts/' + this.postId)
+            .then(() => { 
+                this.$router.go(-1);
             })
             .catch(error => {error})
         },
@@ -164,7 +166,7 @@ export default {
         },
         getProfile(id) {
             if(id !== store.state.userId && id !== null) {
-                    this.$router.push(`/users/${id}`);
+                this.$router.push(`/users/${id}`);
             } else {
                 this.$router.push('/profile');
             }

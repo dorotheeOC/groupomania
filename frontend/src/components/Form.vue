@@ -1,10 +1,10 @@
 <template>
 <section id="main">
-    <div class="col-lg-3 mx-auto my-auto">
+    <div class="col-lg-2 mx-auto my-auto">
         <small><p class="alert text-center" v-if="alert">{{error}}</p></small>
         <div class="card card-container align-items-center">
             <div class="marked">
-                <p class="font-weight-bold" v-if="login == true">Connecte-toi !</p>
+                <p class="font-weight-bold" v-if="login === true">Connecte-toi !</p>
                 <p class="font-weight-bold" v-else>Inscris-toi !</p>
                 <div class="gradient-marked"></div>
             </div>

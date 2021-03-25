@@ -60,6 +60,7 @@ export default new Vuex.Store({
       commented: 0,
       postComment:[]
     },
+    postId: null,
     liked: false,
     newPost: {}, 
     comment: {

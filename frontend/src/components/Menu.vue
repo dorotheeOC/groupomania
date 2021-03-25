@@ -39,7 +39,6 @@
   </header>
 </template>
 <script>
-import store from '../store';
 import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
@@ -55,10 +54,7 @@ export default {
     }),
 	},
 	methods: {
-		...mapActions(["logout", "login"]),
-    userFav() {
-      this.$router.push(`favorites/${store.state.userId}`)
-    }
+		...mapActions(["logout"]),
 	},
 }
 

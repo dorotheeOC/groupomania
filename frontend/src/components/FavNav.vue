@@ -39,12 +39,12 @@ export default {
             })
         },
     mounted() {
-        this.$http.get('users/' + store.state.userId + '/follows?id=' + store.state.userId)
+        this.$http.get('users/' + store.state.userId)
         .then((response) => { 
             response.json()
                 .then((data) => {
                     if(data !== null) {
-                        store.state.userFav = data
+                        store.state.userFav = data.userFollow;
                         console.log('Favorits', store.state.userFav)
                     }
                 })  
