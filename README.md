@@ -12,7 +12,7 @@ Créer un réseau social d'entreprise
 mysql -u root -p
 ```
 * Ajouter votre mot de passe dans la section `PASSWORD` dans le fichier `..backend/config/db.config.js`
-* Importer le fichier `groupomania.sql` sur votre serveur mySql
+* Importer le fichier `Chemin de votre ordinateur/groupomania.sql` sur votre serveur mySql
 * Utiliser les identifiants fournis dans l'archive
 
 ## Backend
