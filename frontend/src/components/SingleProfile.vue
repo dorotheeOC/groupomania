@@ -4,7 +4,7 @@
         <div class="card" >
             <div class="d-flex flex-column align-items-center profile-header p-4">
                 <div class="img-frame">
-                    <img :src="imageUrlUser" class="profile-img-card" />
+                    <img :src="imageUrlUser" class="profile-img-card" alt="photo de profil" />
                 </div>
                 <div class="marked mt-3">
                     <p class="font-weight-bold">{{user.email}}</p>
@@ -18,7 +18,7 @@
                 </button>
                 <div class="d-flex justify-content-center mt-3">
                     <div class="profile-follow d-flex flex-column align-items-center mx-2 p-2">
-                    <p class="display-4 m-0" v-if="user.userFollow">{{user.userFollow.length}}</p>
+                    <p class="display-4 m-0" v-if="user.userFollow !== null">{{user.userFollow.length}}</p>
                     <p class="display-4 m-0" v-else>0</p>
                     <small class="text-uppercase">abonnements</small>
                     </div>
@@ -30,14 +30,14 @@
             </div>
             <div class="card-body d-lg-flex justify-content-center">
                 <div class="mx-lg-4">
-                    <h5 class="card-title">Prénom</h5>
+                    <h3 class="card-title">Prénom</h3>
                     <div class="d-flex align-items-end">
                     <p class="card-text info" v-if="user.firstName === null">indefini</p>
                     <p class="card-text info" v-else>{{user.firstName}}</p>
                     </div>
                 </div>
                 <div class="mx-lg-4">
-                    <h5 class="card-title">Nom</h5>
+                    <h3 class="card-title">Nom</h3>
                     <div class="d-flex align-items-end">
                     <p class="card-text info" v-if="user.lastName === null">indefini</p>
                     <p class="card-text info" v-else>{{user.lastName}}</p>
@@ -68,29 +68,19 @@ export default {
             imageUrlUser: "imageUrlUser"
     }),
     },
-	mounted() {
-        if(store.state.auth) {
-            this.$http.get('http://localhost:3000/api/users/' + this.userProfileId)
-            .then((response) => { 
-                response.json().then((data) => { 
-                    store.state.user = data
-                    console.log(data)
-                })  
-            })
-            .catch(error => {error})
-        }
-        this.$http.get('http://localhost:3000/api/users/' + store.state.userId)
+	beforeMount() {
+        this.$http.get('http://localhost:3000/api/users/' + this.userProfileId)
         .then((response) => { 
-            response.json().then((data) => {
-                for(let followings of data.userFollow) {
-                    console.log(followings)
-                    if (followings.userFollowed === store.state.user.id) {
+            response.json().then((data) => { 
+                store.state.user = data
+                console.log(data)
+                console.log('favorite', store.state.currentUser.userFollow)
+                for(let currentUserFav of store.state.currentUser.userFollow) {
+                    if(currentUserFav.userFollowed === store.state.user.id) {
                         store.state.following = true;
-                    } else {
-                        store.state.following = false;
                     }
                 }
-            })
+            })  
         })
         .catch(error => {error})
 	},

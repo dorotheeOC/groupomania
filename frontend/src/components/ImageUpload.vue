@@ -3,7 +3,8 @@
   <form class="d-flex justify-content-center align-items-center" @submit.prevent="onSubmit" enctype="multipart/form-data">
     <div class="upload-btn d-flex flex-column justify-content-center align-items-center">
       <a><i class="fas fa-folder-open"></i>Modifier</a>
-      <input type="file" ref="file" @change="onSelect">
+      <label for="file"><span class="sr-only">Choisir un fichier</span></label>
+      <input type="file" ref="file" id="file" @change="onSelect">
     </div>
       <button class="btn btn-primary btn-sm">Submit</button>
   </form>

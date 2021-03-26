@@ -1,22 +1,22 @@
 <template>
 <section id="main">
-    <div class="col-lg-3 mx-auto my-auto">
+    <div class="col-lg-2 mx-auto my-auto">
         <small><p class="alert text-center" v-if="alert">{{error}}</p></small>
         <div class="card card-container align-items-center">
             <div class="marked">
-                <p class="font-weight-bold" v-if="login == true">Connecte-toi !</p>
+                <p class="font-weight-bold" v-if="login === true">Connecte-toi !</p>
                 <p class="font-weight-bold" v-else>Inscris-toi !</p>
                 <div class="gradient-marked"></div>
             </div>
-            <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" />
+            <img id="profile-img" src="http://localhost:3000/images/default.png" alt="image utilisateur" class="profile-img-card" />
             <form name="form" @submit.prevent="find" v-if="login == true">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" v-model="currentUser.email"/>
+                    <input type="email" class="form-control" id="email" name="email" v-model="currentUser.email"/>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" v-model="currentUser.password"/>
+                    <input type="password" class="form-control" id="password" name="password" v-model="currentUser.password"/>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-block">
@@ -27,11 +27,11 @@
             <form name="form" @submit.prevent="save" v-else>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" v-model="currentUser.email"/>
+                    <input type="email" class="form-control" id="email" name="email" v-model="currentUser.email"/>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" v-model="currentUser.password"/>
+                    <input type="password" class="form-control" id="password" name="password" v-model="currentUser.password"/>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-block">

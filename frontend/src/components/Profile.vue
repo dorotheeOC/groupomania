@@ -5,7 +5,7 @@
         <small><p class="alert text-center pt-1 mx-auto" v-if="alert">{{error}}</p></small>
         <div class="d-flex flex-column align-items-center profile-header pt-4">
           <div class="img-frame">
-            <img :src="imageUrl" class="profile-img-card" />
+            <img :src="imageUrl" class="profile-img-card" alt="photo de profil" />
           </div>
           <ImageUpload />
           <div class="marked mt-3">
@@ -39,24 +39,26 @@
           <form name="form" @submit.prevent="put">
             <div class="form-container d-flex justify-content-center">
               <div class="form-group mx-4">
-                <label for="firstName">
-                  <h5 class="card-title m-0">Prénom</h5>
-                </label>
+                  <h3 class="card-title m-0">Prénom</h3>
                 <div class="d-flex align-items-end">
                   <p class="card-text info" v-if="currentUser.firstName === null">indefini</p>
                   <p class="card-text info" v-else>{{currentUser.firstName}}</p>
                 </div>
-                <input type="text" class="form-control" name="firstName" v-model="currentUser.firstName" placeholder="Prénom" v-if="visible"/>
+                <div  v-if="visible">
+                  <label for="firstName"><span class="sr-only">Prénom</span></label>
+                  <input type="text" class="form-control" id="firstName" name="firstName" v-model="currentUser.firstName" placeholder="Prénom"/>
+                </div> 
               </div>
               <div class="form-group mx-4">
-                <label for="lastName">
-                  <h5 class="card-title m-0">Nom</h5>
-                </label>
+                  <h3 class="card-title m-0">Nom</h3>
                 <div class="d-flex align-items-end">
                   <p class="card-text info" v-if="currentUser.lastName === null">indefini</p>
                   <p class="card-text info" v-else>{{currentUser.lastName}}</p>
                 </div>
-                <input type="text" class="form-control" name="lastName" v-model="currentUser.lastName" placeholder="Nom" v-if="visible"/>
+                <div  v-if="visible">
+                  <label for="lastName"><span class="sr-only">Nom</span></label>
+                  <input type="text" class="form-control" id="lastName" name="lastName" v-model="currentUser.lastName" placeholder="Nom"/>
+                </div>
               </div>
             </div>
             <div class="form-group d-flex justify-content-center" v-if="visible">
@@ -95,7 +97,7 @@ export default {
       imageUrl: "imageUrl"
     }),
   },
-	mounted() {
+	beforeMount() {
     this.$http.get('users/' + store.state.userId)
     .then((response) => { 
       response.json()

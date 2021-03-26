@@ -5,19 +5,9 @@
         <FavNav />
         <div class="container">
           <small><p class="alert text-center pt-1 mx-auto" v-if="alert">{{reportMsg}}</p></small>
-          <a class="button-edit d-md-block text-white mx-auto" data-toggle="modal" data-target="#ckeditor">
+          <a class="button-edit d-md-block text-white mx-auto" @click="editOnePost">
             <i class="fas fa-plus text-white p-0"></i> <span>Ecrire un post</span> 
-          </a>
-                    <div class="modal fade" id="ckeditor" tabindex="-1" role="dialog" aria-labelledby="ckeditorLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <Ckeditor />
-                            </div>
-                        </div>
-                    </div>
+          </a>          
           <Pagination />
           <Post />
         </div>
@@ -32,8 +22,6 @@ import SearchAll from '../components/SearchAll'
 import FavNav from '../components/FavNav'
 import Post from '../components/Post'
 import Pagination from '../components/Pagination'
-import Ckeditor from '../components/Ckeditor'
-
 
 import store from '../store'
 import { mapState } from "vuex";
@@ -41,7 +29,7 @@ import { mapState } from "vuex";
 
 export default {
   name: 'Feed',
-  components: { SearchAll, Post, FavNav, Pagination, Ckeditor },
+  components: { SearchAll, Post, FavNav, Pagination },
   computed: {
       ...mapState({
         search: "search",
@@ -50,26 +38,26 @@ export default {
       }),
   },       
   beforeMount() {
-    if(store.state.auth) {
-      store.state.userId = (JSON.parse(localStorage.getItem('jwt'))).userId
-      console.log('Online user:', store.state.userId)
-      this.$http.get('users/' + store.state.userId)
-      .then((response) => { 
-        response.json().then((data) => {
-          store.state.currentUser = data;
-        })
+    store.state.userId = (JSON.parse(localStorage.getItem('jwt'))).userId
+    console.log('Online user:', store.state.userId)
+    this.$http.get('users/' + store.state.userId)
+    .then((response) => { 
+      response.json().then((data) => {
+        store.state.currentUser = data;
       })
-      .catch(error => {error})
-    } else {
-      this.$router.push("/");
-      localStorage.clear()
-    }
+    })
+    .catch(error => {error})
   },
   beforeDestroy() {
     store.state.search.query = null;
     store.state.posts = [];
     store.state.pagination = [];
-  } 
+  },
+  methods: {
+    editOnePost() {
+      this.$router.push('/ckeditor');
+    }
+  }
 }
 
 </script>

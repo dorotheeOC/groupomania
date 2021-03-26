@@ -6,15 +6,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/ckeditor',
-    name: 'Ckeditor',
-    component: () => import('../components/Ckeditor.vue'),
-    beforeEnter: (to, from, next) => {
-      if (!store.state.auth) next({ name: 'Login' })
-      else next()
-    }
-  },
-  {
     path: '/',
     name: 'Login',
     component: () => import('../components/Login.vue')
@@ -43,6 +34,15 @@ const routes = [
     }
   },
   {
+    path: '/ckeditor',
+    name: 'Ckeditor',
+    component: () => import('../components/Ckeditor.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.auth ) next({ name: 'Login' })
+      else next()
+    }
+  },
+  {
     path: '/posts/:id',
     name: 'singlePost',
     component: () => import('../components/SinglePost.vue'),
@@ -50,7 +50,6 @@ const routes = [
       if (!store.state.auth ) next({ name: 'Login' })
       else next()
     }
-    
   },
   {
     path: '/users/:id',

@@ -11,16 +11,15 @@
                 </div>
                     <ul class="list p-1">
                         <p class="p-4" v-if="postsReported.length === 0">Rien à signaler !</p>
-                        <li class="list-report my-3 px-4 p-1" v-for="post in postsReported" :key="post.id">
+                        <li class="list-report post-report my-3 px-4 p-1" v-for="post in postsReported" :key="post.id" @click="getOnePost(post.id)">
                             <div class="d-lg-flex justify-content-lg-between align-items-center">
                                 <div>
                                     {{post.title}}
                                     <small>
-                                        <p class="my-0">{{post.postContent}}</p>
                                         <p class="report-author font-weight-bold my-0">{{post.author}}</p>
                                     </small>
                                 </div>
-                                <a class="font-weight-bold" @click="deletePost(post.id)">{{post.reported}}
+                                <a class="font-weight-bold" @click="deletePost(post.id)">
                                     <i class="fas fa-trash"></i>Supprimer
                                 </a>
                             </div> 
@@ -64,12 +63,24 @@ export default {
             commentsReported: "commentsReported",
         }),
     },
+    beforeMount() {
+        store.state.postsReported = [];
+        store.state.commentsReported = [];
+        store.state.userId = (JSON.parse(localStorage.getItem('jwt'))).userId
+        console.log('Online user:', store.state.userId)
+        this.$http.get('users/' + store.state.userId)
+        .then((response) => { 
+        response.json().then((data) => {
+            store.state.currentUser = data;
+        })
+        })
+        .catch(error => {error})
+    },
     mounted() {
         this.$http.get('posts')
         .then((response) => { 
             response.json().then((data) => {
                for(let post of data.post) {
-                   console.log(post)
                    if(post.reported === true) {
                        store.state.postsReported.push(post);
                    }
@@ -85,11 +96,10 @@ export default {
         })
         .catch(error => {error})
 	},
-    beforeMount() {
-        store.state.postsReported = [];
-        store.state.commentsReported = [];
-    },
     methods: {
+        getOnePost(id) {
+            this.$router.push(`posts/${id}`);
+        },
         deletePost(id) {
             this.$http.delete('posts/' + id)
             .then(() => { 
