@@ -13,6 +13,7 @@
                         <span class="sr-only">Titre</span>
                     </label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Titre du post" v-model="newPost.title"/>
+                    <input type="text" class="form-control" name="title" placeholder="Titre du post" v-model="newPost.title"/>
                 </div>
                 <ckeditor :config="editorConfig" v-model="newPost.postContent"></ckeditor>
                 <div class="form-group d-flex justify-content-end">
