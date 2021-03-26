@@ -6,7 +6,7 @@
             <div class="card py-4" >
                 <a @click="goBack" class="back font-weight-bold px-4">	&larr; Retour</a>
             <div class="post-title pl-4 my-0">
-                <h3 class="card-text my-0">{{post.title}}</h3>
+                <h2 class="card-text my-0">{{post.title}}</h2>
                 <div class="d-md-flex justify-content-start align-items-center">
                     <div class="card-text">
                         <small class="text-muted">De <a @click="getProfile(post.userId)">{{post.author}} </a></small>
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <ul class="list-group list-group-flush pt-4 p-md-4">
-                <h4 class="card-text pl-4 pl-lg-0 my-0">Commentaires</h4>
+                <h3 class="card-text pl-4 pl-lg-0 my-0">Commentaires</h3>
                 <p class="ml-4" v-if="post.commented === 0">Ecris le premier commentaire !</p>
                 <li class="list-group-item ml-2"  v-for="(comment, index) in post.postComment" :key="comment.index">
                     <div class="card-text my-0 ml-lg-2 p-0">
@@ -110,6 +110,7 @@ export default {
 	},
     beforeDestroy() {
         store.state.liked = false;
+        store.state.newPost ={};
     },
     methods: {
         dateFormat(date) {

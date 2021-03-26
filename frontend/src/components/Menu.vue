@@ -1,7 +1,7 @@
 <template>
   <header class="bg-white">
-    <p class=" navbar-brand d-flex justify-content-center" @click.prevent>
-      <img src="../assets/icon-black.png" width="55" class="d-inline-block align-top" alt="">Groupomania</p>
+    <h1 class=" navbar-brand d-flex justify-content-center" @click.prevent>
+      <img src="../assets/icon-black.png" width="55" class="d-inline-block align-top" alt="">Groupomania</h1>
     <nav class="navbar navbar-expand-lg navbar-light p-0">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

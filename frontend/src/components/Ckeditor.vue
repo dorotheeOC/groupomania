@@ -9,6 +9,10 @@
                     <div class="gradient-marked"></div>
                 </div>
                 <div class="form-group">
+                    <label for="title">
+                        <span class="sr-only">Titre</span>
+                    </label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Titre du post" v-model="newPost.title"/>
                     <input type="text" class="form-control" name="title" placeholder="Titre du post" v-model="newPost.title"/>
                 </div>
                 <ckeditor :config="editorConfig" v-model="newPost.postContent"></ckeditor>
@@ -81,7 +85,6 @@ import { mapState, mapGetters } from "vuex";
                             store.state.pagination.push(lastPage);
                             console.log('lastPage condition',lastPage);
                         }
-                        store.state.newPost = {};
                         this.$router.push('/feed');
                     })
                     .catch(() => {
@@ -97,7 +100,6 @@ import { mapState, mapGetters } from "vuex";
                         store.state.alert = true;
                         store.state.reportMsg = 'Le post a bien été modifié !';
                         setTimeout(() => { store.state.alert = false; }, 2000);
-                        store.state.newPost = {}
                         this.$router.go(-1);
                     })
                     .catch(error => {error});
@@ -111,6 +113,6 @@ import { mapState, mapGetters } from "vuex";
         display:none!important;
 }
 .cke_contents {
-        height: 6rem!important;
+        height: auto!important;
 }
 </style>

@@ -8,7 +8,7 @@
     <div class="post col-lg-6 my-4 mx-auto" v-for="(post) in posts" :key="post.id">   
         <div class="card">
             <div class="post-title pl-4 pt-4 my-0">
-                <h3 class="card-text my-0">{{post.title}}</h3>
+                <h2 class="card-text my-0">{{post.title}}</h2>
                     <div class="card-text d-lg-flex align-items-center m-0">
                         <div class="mr-2">
                             <small class="text-muted" v-if="post.userId !== null">De 

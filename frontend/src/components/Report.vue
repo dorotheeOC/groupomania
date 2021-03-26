@@ -63,12 +63,24 @@ export default {
             commentsReported: "commentsReported",
         }),
     },
+    beforeMount() {
+        store.state.postsReported = [];
+        store.state.commentsReported = [];
+        store.state.userId = (JSON.parse(localStorage.getItem('jwt'))).userId
+        console.log('Online user:', store.state.userId)
+        this.$http.get('users/' + store.state.userId)
+        .then((response) => { 
+        response.json().then((data) => {
+            store.state.currentUser = data;
+        })
+        })
+        .catch(error => {error})
+    },
     mounted() {
         this.$http.get('posts')
         .then((response) => { 
             response.json().then((data) => {
                for(let post of data.post) {
-                   console.log(post)
                    if(post.reported === true) {
                        store.state.postsReported.push(post);
                    }
@@ -84,10 +96,6 @@ export default {
         })
         .catch(error => {error})
 	},
-    beforeMount() {
-        store.state.postsReported = [];
-        store.state.commentsReported = [];
-    },
     methods: {
         getOnePost(id) {
             this.$router.push(`posts/${id}`);

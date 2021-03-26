@@ -151,7 +151,8 @@ export default new Vuex.Store({
 			state.auth = false;
       router.push("/");
       localStorage.clear();
-      state.currentUser = {}
+      state.currentUser = {};
+      state.userId = null;
 		},
     LOG_IN(state) {
 			state.auth = true;

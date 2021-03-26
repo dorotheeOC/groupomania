@@ -3,10 +3,11 @@
         <form name="form" @submit.prevent="editComment">
             <div class="form-group">
                 <div class="marked">
-                    <label for="commentText">Ecris ton commentaire sympa !</label>
+                    <p for="commentText">Ecris ton commentaire sympa !</p>
                     <div class="gradient-marked"></div>
                 </div>
-                <input type="text" class="form-control" name="commentText" v-model="comment.commentText"/>
+                <label for="commentText"><span class="sr-only">Commentaire</span></label>
+                <input type="text" class="form-control" id="commentText" name="commentText" v-model="comment.commentText"/>
             </div>
             <div class="form-group d-flex justify-content-end">
             <button class="btn btn-outline-primary btn-sm">

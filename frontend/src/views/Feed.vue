@@ -38,20 +38,15 @@ export default {
       }),
   },       
   beforeMount() {
-    if(store.state.auth) {
-      store.state.userId = (JSON.parse(localStorage.getItem('jwt'))).userId
-      console.log('Online user:', store.state.userId)
-      this.$http.get('users/' + store.state.userId)
-      .then((response) => { 
-        response.json().then((data) => {
-          store.state.currentUser = data;
-        })
+    store.state.userId = (JSON.parse(localStorage.getItem('jwt'))).userId
+    console.log('Online user:', store.state.userId)
+    this.$http.get('users/' + store.state.userId)
+    .then((response) => { 
+      response.json().then((data) => {
+        store.state.currentUser = data;
       })
-      .catch(error => {error})
-    } else {
-      this.$router.push("/");
-      localStorage.clear();
-    }
+    })
+    .catch(error => {error})
   },
   beforeDestroy() {
     store.state.search.query = null;
