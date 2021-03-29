@@ -11,17 +11,22 @@
                 </div>
                     <ul class="list p-1">
                         <p class="p-4" v-if="postsReported.length === 0">Rien à signaler !</p>
-                        <li class="list-report post-report my-3 px-4 p-1" v-for="post in postsReported" :key="post.id" @click="getOnePost(post.id)">
+                        <li class="list-report post-report my-3 px-4 p-1" v-for="post in postsReported" :key="post.id">
                             <div class="d-lg-flex justify-content-lg-between align-items-center">
-                                <div>
+                                <div @click.stop.prevent="getOnePost(post.id)">
                                     {{post.title}}
                                     <small>
                                         <p class="report-author font-weight-bold my-0">{{post.author}}</p>
                                     </small>
                                 </div>
-                                <a class="font-weight-bold" @click="deletePost(post.id)">
-                                    <i class="fas fa-trash"></i>Supprimer
-                                </a>
+                                <div class="d-flex justify-content-around align-items-center mt-sm-4">
+                                    <a class="text-muted mx-2" @click="ignorePostReport(post.id)">
+                                        <i class="fas fa-check pl-0"></i>Ignorer
+                                    </a>
+                                    <a class="text-muted mx-2" @click="deletePost(post.id)">
+                                        <i class="fas fa-trash pl-0"></i>Supprimer
+                                    </a>
+                                </div>
                             </div> 
                         </li>
                     </ul>
@@ -41,6 +46,9 @@
                                         <p class="report-author font-weight-bold my-0">{{comment.author}}</p>
                                     </small>
                                 </div>
+                                <a class="font-weight-bold" @click="ignoreCommentReport(comment.id, comment.postId)">
+                                    <i class="fas fa-trash"></i>Ignore
+                                </a>
                                 <a class="font-weight-bold" @click="deleteComment(comment.id, comment.postId)">
                                     <i class="fas fa-trash"></i>Supprimer
                                 </a>
@@ -99,6 +107,32 @@ export default {
     methods: {
         getOnePost(id) {
             this.$router.push(`posts/${id}`);
+        },
+        ignorePostReport(id) {
+            const reported = {reported: false}
+            this.$http.put('posts/' + id, reported, {headers: {'Content-Type': 'application/json'}})
+            .then(() => { 
+                for (let i = 0; i < store.state.postsReported.length; i++) {
+                    if (store.state.postsReported[i].id === id) {
+                        const index = i
+                        store.state.postsReported.splice(index, 1)
+                    }
+                }
+            })
+            .catch(error => {error})
+        },
+        ignoreCommentReport(id, postId) {
+            const reported = {reported: false}
+            this.$http.put('posts/' + postId + '/comments/' + id, reported, {headers: {'Content-Type': 'application/json'}})
+            .then(() => { 
+                for (let i = 0; i < store.state.commentsReported.length; i++) {
+                    if (store.state.commentsReported[i].id === id) {
+                        const index = i
+                        store.state.commentsReported.splice(index, 1)
+                    }
+                }
+            })
+            .catch(error => {error})
         },
         deletePost(id) {
             this.$http.delete('posts/' + id)
