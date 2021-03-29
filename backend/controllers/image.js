@@ -12,9 +12,6 @@ exports.uploadImage = (req, res, next) => {
         userId: req.body.userId,
         type: req.file.mimetype,
         name: req.file.filename,
-        data: fs.readFileSync(
-          __basedir + "/images/" + req.file.filename
-        ),
       })
       .then(() => {
         res.status(200).json({message: 'Image enregistrée', file: req.file.filename});
@@ -30,9 +27,6 @@ exports.uploadImage = (req, res, next) => {
           userId: req.body.userId,
           type: req.file.mimetype,
           name: req.file.filename,
-          data: fs.readFileSync(
-            __basedir + "/images/" + req.file.filename
-          ),
         })
         .then(() => {
           res.status(200).json({message: 'Image modifiée', file: req.file.filename});
