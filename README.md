@@ -7,13 +7,12 @@ Créer un réseau social d'entreprise
 
 ### Connexion
 
+* Importer le fichier `mysql -u root -p  <  Chemin de votre ordinateur/groupomania.sql` sur votre serveur mySql
 * Exécuter la commande suivante:
 ```bash
-mysql -u root -p
+mysql -u root -p groupomania;
 ```
-* Ajouter votre mot de passe dans la section `PASSWORD` dans le fichier `..backend/config/db.config.js`
-* Importer le fichier `Chemin de votre ordinateur/groupomania.sql` sur votre serveur mySql
-* Utiliser les identifiants fournis dans l'archive
+* Ajouter votre mot de passe dans la section `PASSWORD` dans le fichier `..backend/config/db.config.js` et sauvegarder
 
 ## Backend
 
@@ -36,6 +35,5 @@ développé avec VueJS & Bootstrap
 $ npm install
 $ npm run serve
 ```
-
-
+Utiliser les identifiants fournis dans l'archive
 
