@@ -12,7 +12,7 @@
                     <div class="card-text d-lg-flex align-items-center m-0">
                         <div class="mr-2">
                             <small class="text-muted" v-if="post.userId !== null">De 
-                            <a aria-label="Voir le profil" @click="getProfile(post.userId)">{{post.author}} </a>
+                            <span class="link" aria-label="Voir le profil" @click="getProfile(post.userId)">{{post.author}} </span>
                             </small>
                             <small class="text-muted" v-else>Utilisateur supprimé </small>
                             <small class="text-muted" v-if="post.createdAt">le {{dateFormat(post.createdAt)}}</small>
@@ -24,16 +24,19 @@
                 <div class="card-text post-content" v-html="post.postContent"></div>
                 <button @click.stop="getOnePost(post.id)" class="btn btn-outline-primary btn-sm" v-if="post.createdAt">Commenter</button>
                 <small>
-                    <a class="report text-muted ml-3 p-1" @click="reportPost(post.id)" v-if="currentUser.role === 'user' && currentUser.id != post.userId">
+                    <span class="report text-muted ml-3 p-1" @click="reportPost(post.id)" v-if="currentUser.role === 'user' && currentUser.id != post.userId">
                         <i class="fas fa-exclamation-circle"></i>
-                        <span>Signaler</span>
-                    </a>
+                        Signaler
+                    </span>
                 </small>
                 <small>
-                    <a class="report text-muted ml-3 p-1" @click.prevent="deleteOnePost(post.id)" v-if="currentUser.role === 'admin' && post.createdAt || currentUser.id === post.userId && post.id">
+                    <span class="report text-muted ml-3 p-1" 
+                    @click.prevent="deleteOnePost(post.id)" 
+                    v-if="currentUser.role === 'admin' && post.createdAt || 
+                    currentUser.id === post.userId && post.id">
                         <i class="fas fa-trash"></i>
-                        <span>Supprimer</span>
-                    </a>
+                        Supprimer
+                    </span>
                 </small>
                 <div class="d-flex justify-content-end stat">
                 <span class="card-text my-0 ml-2" ><i class="far fa-heart"></i>{{ post.liked }}</span>
@@ -64,7 +67,6 @@ export default {
         this.$http.get('posts?page=0')
         .then((response) => { 
             response.json().then((data) => { 
-                console.log(data)
                 store.state.posts = data.response.posts;
                 store.state.totalItems = data.post.length
                 store.state.totalPages = data.response.totalPages
@@ -76,8 +78,6 @@ export default {
             })  
         })
         .catch(error => {error})
-        console.log('totalItems', store.state.totalItems)
-        console.log('totalPages', store.state.totalPages)
 	},
     methods: {
         dateFormat(date) {

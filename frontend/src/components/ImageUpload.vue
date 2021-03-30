@@ -2,11 +2,11 @@
 <div>
   <form class="d-flex justify-content-center align-items-center" @submit.prevent="onSubmit" enctype="multipart/form-data">
     <div class="upload-btn d-flex flex-column justify-content-center align-items-center">
-      <a><i class="fas fa-folder-open"></i>Modifier</a>
-      <label for="file"><span class="sr-only">Choisir un fichier</span></label>
+      <span class="link"><i class="fas fa-folder-open"></i>Modifier</span>
+      <label class="m-0" for="file"><span class="sr-only">Choisir un fichier</span></label>
       <input type="file" ref="file" id="file" @change="onSelect">
     </div>
-      <button class="btn btn-primary btn-sm">Submit</button>
+    <button class="btn btn-primary btn-sm">Submit</button>
   </form>
   <small>
     <p class="muted text-center m-0 p-0" v-if="file">{{file.name}}</p>

@@ -73,7 +73,6 @@ export default {
         .then((response) => { 
             response.json().then((data) => { 
                 store.state.user = data
-                console.log(data)
                 console.log('favorite', store.state.currentUser.userFollow)
                 for(let currentUserFav of store.state.currentUser.userFollow) {
                     if(currentUserFav.userFollowed === store.state.user.id) {

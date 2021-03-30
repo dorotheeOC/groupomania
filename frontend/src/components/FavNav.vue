@@ -7,7 +7,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <p class="dropdown-item text-muted p-0 m-0" v-if="userFav.length === 0">Aucun abonnement</p>
-                <a class="dropdown-item" v-for="user in userFav" :key="user.id" @click="getFav(user.userFollowed)">{{user.userEmail}}</a>
+                <span class="dropdown-item" v-for="user in userFav" :key="user.id" @click="getFav(user.userFollowed)">{{user.userEmail}}</span>
             </div>
         </div>
         <div class="card nav-fav d-none d-md-block pl-2 col-md-6 py-2">
@@ -19,12 +19,13 @@
             <ul class="nav flex-column">
                 <p class="nav-link text-muted mx-auto" v-if="userFav.length === 0">Aucun abonnement</p>
                 <li class="nav-item mx-auto" v-for="user in userFav" :key="user.id">
-                    <a class="nav-link" @click="getFav(user.userFollowed)">{{user.userEmail}}</a>
+                    <small>
+                        <span class="nav-link" @click="getFav(user.userFollowed)">{{user.userEmail}}</span>
+                    </small>
                 </li>
             </ul>
         </div>
     </div>
-    
 </template>
 <script>
 import store from '../store';
@@ -33,20 +34,17 @@ import { mapState } from "vuex";
 export default {
     name: 'FavNav',
     computed: {
-            ...mapState({
-                userFav: "userFav",
-                currentUser: "currentUser"
-            })
-        },
+        ...mapState({
+            userFav: "userFav",
+            currentUser: "currentUser"
+        })
+    },
     mounted() {
         this.$http.get('users/' + store.state.userId)
         .then((response) => { 
             response.json()
                 .then((data) => {
-                    if(data !== null) {
-                        store.state.userFav = data.userFollow;
-                        console.log('Favorits', store.state.userFav)
-                    }
+                    store.state.userFav = data.userFollow;
                 })  
             })
         .catch(error => {error})
@@ -60,7 +58,7 @@ export default {
             .then((response) => { 
                 response.json().then((data) => { 
                     store.state.posts = data.response.posts;
-                    store.state.favId = id;
+                    store.state.favId = id; // getSearch() searchAll.vue
                 })  
             })
             .catch(error => {error})

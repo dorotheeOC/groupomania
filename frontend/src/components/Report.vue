@@ -13,19 +13,19 @@
                         <p class="p-4" v-if="postsReported.length === 0">Rien à signaler !</p>
                         <li class="list-report post-report my-3 px-4 p-1" v-for="post in postsReported" :key="post.id">
                             <div class="d-lg-flex justify-content-lg-between align-items-center">
-                                <div @click.stop.prevent="getOnePost(post.id)">
+                                <div @click.self="getOnePost(post.id)">
                                     {{post.title}}
                                     <small>
                                         <p class="report-author font-weight-bold my-0">{{post.author}}</p>
                                     </small>
                                 </div>
-                                <div class="d-flex justify-content-around align-items-center mt-sm-4">
-                                    <a class="text-muted mx-2" @click="ignorePostReport(post.id)">
+                                <div class="d-flex justify-content-around align-items-center mt-2">
+                                    <span class="text-muted mx-2" @click="ignorePostReport(post.id)">
                                         <i class="fas fa-check pl-0"></i>Ignorer
-                                    </a>
-                                    <a class="text-muted mx-2" @click="deletePost(post.id)">
+                                    </span>
+                                    <span class="text-muted mx-2" @click="deletePost(post.id)">
                                         <i class="fas fa-trash pl-0"></i>Supprimer
-                                    </a>
+                                    </span>
                                 </div>
                             </div> 
                         </li>
@@ -46,12 +46,14 @@
                                         <p class="report-author font-weight-bold my-0">{{comment.author}}</p>
                                     </small>
                                 </div>
-                                <a class="font-weight-bold" @click="ignoreCommentReport(comment.id, comment.postId)">
-                                    <i class="fas fa-trash"></i>Ignore
-                                </a>
-                                <a class="font-weight-bold" @click="deleteComment(comment.id, comment.postId)">
-                                    <i class="fas fa-trash"></i>Supprimer
-                                </a>
+                                <div class="d-flex justify-content-around align-items-center mt-2">
+                                    <span class="text-muted mx-2" @click="ignoreCommentReport(comment.id, comment.postId)">
+                                        <i class="fas fa-check pl-0"></i>Ignorer
+                                    </span>
+                                    <span class="text-muted mx-2" @click="deleteComment(comment.id, comment.postId)">
+                                        <i class="fas fa-trash pl-0"></i>Supprimer
+                                    </span>
+                                </div>
                             </div>
                         </li>
                     </ul>

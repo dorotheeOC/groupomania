@@ -3,7 +3,7 @@
     <button class="btn btn-primary btn-sm my-sm-0" @click.prevent="back" v-if="visible">Tous les posts</button>
     <ul class="pagination pagination-sm justify-content-center my-0">
         <li class="page-item"  v-for="(page, index) in pagination" :key="page">
-            <a class="page-link" :class="'page-link--'+ index" @click.prevent="getPage(index)" >{{page}}</a>
+            <button class="page-link" :class="'page-link--'+ index" @click.prevent="getPage(index)" >{{page}}</button>
         </li>
     </ul>
 </div>
@@ -19,13 +19,14 @@ export default {
             visible: "visible"
         }),
         ...mapGetters({
-            pagination: "pagination",
-            search: "search"
+            pagination: "pagination"
         }),
     },
     methods: {
         getPage(index) {
-            this.$http.get(store.state.search.query === null? 'posts?page=' + index : 'posts?search=' + store.state.search.query + '&page=' + index)
+            this.$http.get(store.state.search.query === null ? 
+            'posts?page=' + index : 
+            'posts?search=' + store.state.search.query + '&page=' + index)
             .then((response) => {
                 response.json().then((data) => { 
                     store.state.posts = data.response.posts;
@@ -35,10 +36,10 @@ export default {
                         page.classList.remove("active");
                         }
                     }
-                    const pageLink = document.querySelector("a.page-link--" + index);
+                    const pageLink = document.querySelector("button.page-link--" + index);
                     const pageItem = pageLink.parentNode;
                     pageItem.classList.add("active");
-                    store.state.currentPage = index; //delete redirection
+                    store.state.currentPage = index;
             })  
         })
             .catch(error => {error})
@@ -53,6 +54,13 @@ export default {
                     store.state.visible = false;
                     store.state.search.query = null;
                     store.state.posts = data.response.posts;
+                    store.state.totalItems = data.post.length
+                    store.state.totalPages = data.response.totalPages
+                    let index = 0;
+                    while(index <= store.state.totalPages -1) {
+                        index++;
+                        store.state.pagination.push(index)
+                    }
                 })  
             })
             .catch(error => {error})

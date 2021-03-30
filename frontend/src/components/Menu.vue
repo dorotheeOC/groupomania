@@ -21,7 +21,7 @@
               <router-link to="/profile" class="nav-link text-center">Profil</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-center" @click.prevent="logout">Se déconnecter</a>
+              <span class="nav-link text-center" @click.prevent="logout">Se déconnecter</span>
             </li>
           </ul>
       </div>
