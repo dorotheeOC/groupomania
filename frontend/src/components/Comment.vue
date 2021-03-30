@@ -14,7 +14,7 @@
                 <span>Envoyer</span>
             </button>
             </div>
-      </form>
+        </form>
     </div>
 </template>
 <script>
@@ -35,13 +35,11 @@ export default {
     },
     methods: {
         editComment() {
-            this.$emit('input', store.state.comment);
             this.$http.post('posts/' + this.postId + '/comments', {
                 userId: store.state.userId, commentText: store.state.comment.commentText
             }, {headers: {'Content-Type': 'application/json'}})
             .then((response) => {
                 store.state.post.commented++
-                console.log(response.body)
                 store.state.post.postComment.push(response.body)
                 store.state.comment.commentText = '';
             })

@@ -8,14 +8,11 @@
 <script>
 
 import Menu from './components/Menu.vue'
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   components: { Menu, },
   computed: {
-		...mapState({
-			auth: "auth"
-		}),
     ...mapGetters({
       footer: "footer"
     })

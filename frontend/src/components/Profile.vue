@@ -24,8 +24,8 @@
             </div>
           </div>
           <div class="mt-4">
-            <a class="card-text" @click.prevent.stop="showInput"  v-if="!message"><i class="fas fa-edit"></i>Editer</a>
-            <a class="card-text m-md-2" @click.prevent="confirmDelete" v-if="!message"><i class="fas fa-trash"></i>Supprimer le compte</a>
+            <span class="link card-text" @click.prevent.stop="showInput"  v-if="!message"><i class="fas fa-edit"></i>Editer</span>
+            <span class="link card-text m-md-2" @click.prevent="confirmDelete" v-if="!message"><i class="fas fa-trash"></i>Supprimer le compte</span>
             <div class="alert-box mx-auto my-3" v-else>
               <p>Etes vous sûr(e) de vouloir supprimer ce compte ?</p>
               <div class="d-flex justify-content-center">
@@ -70,7 +70,6 @@
               </button>
             </div>
           </form>
-         
         </div>
     </div>
   </div></div>
@@ -102,8 +101,8 @@ export default {
     .then((response) => { 
       response.json()
         .then((data) => { 
-          store.state.currentUser = data
-          console.log('currentuser', store.state.currentUser)
+          store.state.currentUser = data;
+          console.log('currentuser', store.state.currentUser);
         })  
     })
     .catch(error => {error})
@@ -116,7 +115,10 @@ export default {
   methods: {
     ...mapActions(["showInput", "hideInput", "confirmDelete", "cancel"]),
     put() {
-      const newInfo = {firstName: store.state.currentUser.firstName, lastName: store.state.currentUser.lastName}
+      const newInfo = {
+        firstName: store.state.currentUser.firstName, 
+        lastName: store.state.currentUser.lastName
+      }
       this.$http.put('users/' + store.state.userId, newInfo, {headers: {'Content-Type': 'application/json'}})
       .then(() => { 
         store.state.visible = false;
