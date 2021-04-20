@@ -1,15 +1,16 @@
 const bcrypt = require("bcrypt");
 const db = require("../models");
 const User = db.users;
+require('dotenv').config()
 
 insertAdmin = (req, res) => {
-  User.findOne({ where: { email: "admin@gmail.com" } || { pseudo: "admin" } })
+  User.findOne({ where: { email: process.env.ADMIN_EMAIL } || { pseudo: "admin" } })
     .then((user) => {
       if (!user) {
-        bcrypt.hash("password123+", 10)
+        bcrypt.hash(process.env.ADMIN_PASS, 10)
           .then((hash) => {
             User.create({
-              email: "admin@gmail.com",
+              email: process.env.ADMIN_EMAIL,
               password: hash,
               role: 'admin',
             })
