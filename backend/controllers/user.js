@@ -10,23 +10,29 @@ const Follow = db.follows;
 const Op = db.Sequelize.Op;
 
 exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10)
-      .then(hash => {
-        const user = {
-          email: req.body.email,
-          password: hash
-        };
-        User.create(user)
-          .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
-          .catch(error => res.status(400).json({ error }));
-      })
-      .catch(error => res.status(500).json({ error }));
-  };
+    const regex = /[='<>/]/g;
+    const passwordValid = req.body.password.match(regex);
+    if(!passwordValid) {
+        bcrypt.hash(req.body.password, 10)
+        .then(hash => {
+            const user = new User({
+            email: req.body.email,
+            password: hash
+            });
+            user.save()
+            .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+            .catch(error => res.status(400).json({ message: 'Ton email existe déjà !' }));
+        })
+        .catch(error => res.status(500).json({ error }));
+    } else {
+        res.status(400).json({ message: 'Caractères spéciaux non autorisés'})
+    }
+};
 
 exports.login = (req, res, next) => {
     User.findOne({
         where:{ email: req.body.email }})
-        .then(user => {console.log(user)
+        .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !' });
             }
