@@ -12,7 +12,8 @@ Créer un réseau social d'entreprise
 ```bash
 mysql -u root -p groupomania;
 ```
-* Ajouter votre mot de passe dans la section `PASSWORD` dans le fichier `..backend/config/db.config.js` et sauvegarder
+* Renommer le fichier `.dist.env` >>> `.env` et le compléter avec les informations fournies.
+* Ajouter votre mot de passe dans la section `DB_PASS` dans le fichier `.env` et sauvegarder
 
 ## Backend
 
