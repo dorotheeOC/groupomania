@@ -68,12 +68,20 @@ export default new Vuex.Store({
     },
     alert: false,
     error: null, 
-    reportMsg: null
+    reportMsg: null,
+    show: false,
+    limit: {
+      min: 14,
+      sec: 60
+    }
   },
   getters: {//computed
     auth: (state) => {
 			return state.auth;
 		},
+    limit: (state) => {
+      return state.limit
+    },
     login: (state) => {
 			return state.login;
 		},
