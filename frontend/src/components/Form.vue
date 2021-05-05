@@ -1,6 +1,6 @@
 <template>
 <section id="main">
-    <div class="col-lg-3 mx-auto my-auto">{{currentUser}}
+    <div class="col-lg-3 mx-auto my-auto">
         <small><p class="alert text-center" v-if="alert">{{error}}</p></small>
         <div class="card card-container align-items-center">
             <div class="marked">
