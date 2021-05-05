@@ -48,6 +48,9 @@ export default {
     })
     .catch(error => {error})
   },
+  mounted() {
+    store.state.newPost = {};
+  },
   beforeDestroy() {
     store.state.search.query = null;
     store.state.posts = [];
