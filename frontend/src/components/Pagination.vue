@@ -45,8 +45,8 @@ export default {
             .catch(error => {error})
         },
         back() {
-            store.state.posts = {}
-            store.state.pagination =[]
+            store.state.posts = {};
+            store.state.pagination =[];
             this.$http.get('posts?page=0')
             .then((response) => { 
                 response.json().then((data) => { 
@@ -54,12 +54,12 @@ export default {
                     store.state.visible = false;
                     store.state.search.query = null;
                     store.state.posts = data.response.posts;
-                    store.state.totalItems = data.post.length
-                    store.state.totalPages = data.response.totalPages
+                    store.state.totalItems = data.post.length;
+                    store.state.totalPages = data.response.totalPages;
                     let index = 0;
                     while(index <= store.state.totalPages -1) {
                         index++;
-                        store.state.pagination.push(index)
+                        store.state.pagination.push(index);
                     }
                 })  
             })

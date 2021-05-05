@@ -1,6 +1,6 @@
 <template>
 <section id="main">
-    <div class="col-lg-2 mx-auto my-auto">
+    <div class="col-lg-3 mx-auto my-auto">{{currentUser}}
         <small><p class="alert text-center" v-if="alert">{{error}}</p></small>
         <div class="card card-container align-items-center">
             <div class="marked">
@@ -92,7 +92,8 @@ export default {
                         const timer = setInterval(() => {
                             store.state.limit.sec--;
                             if(store.state.limit.sec === 0) {
-                                store.state.limit.sec = 60; store.state.limit.min--
+                                store.state.limit.sec = 60; 
+                                store.state.limit.min--;
                             }
                         }, 1000)
                         setTimeout(() => {

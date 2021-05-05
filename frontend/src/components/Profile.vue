@@ -111,6 +111,7 @@ export default {
     store.state.visible = false;
     store.state.file = {};
     store.state.error = '';
+    store.state.message = false;
   },
   methods: {
     ...mapActions(["showInput", "hideInput", "confirmDelete", "cancel"]),
@@ -129,6 +130,7 @@ export default {
       this.$http.delete('users/' + this.userId)
       .then(() => { 
         store.state.auth = false;
+        store.state.currentUser = {};
         this.$router.push('/');
       })
       .catch(error => {error})

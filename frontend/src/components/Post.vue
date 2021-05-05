@@ -64,6 +64,7 @@ export default {
       }),
     },
 	mounted() {
+        store.state.favId = 0;
         this.$http.get('posts?page=0')
         .then((response) => { 
             response.json().then((data) => { 
