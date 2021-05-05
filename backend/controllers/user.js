@@ -1,3 +1,4 @@
+const fs = require("fs");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -84,15 +85,23 @@ exports.modifyOneUser = (req, res, next) => {
     });
 };
 exports.deleteOneUser = (req, res, next) => {  
-    User.destroy({
-      where: { id: req.params.id }
+    Image.findOne({ 
+        where: { userId: req.params.id}
     })
-      .then(user => {
-        if (user == 1) {
-            res.status(200).json({ message: 'Profil supprimé !'});
-        } else {
-            res.status(400).json({ error });
-        }
+    .then(image => {
+        const filename = image.name
+        fs.unlink(`images/${filename}`, () => {
+            User.destroy({
+                where: { id: req.params.id }
+              })
+                .then(user => {
+                  if (user == 1) {
+                      res.status(200).json({ message: 'Profil supprimé !'});
+                  } else {
+                      res.status(400).json({ error });
+                  }
+              })
+        })
     })
     .catch(error => {
         res.status(500).json({error});
